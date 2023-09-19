@@ -1,0 +1,17 @@
+.event-window {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .event-window-message {
+    font-weight: bold;
+  }
+  
+  .event-window-button {
+    margin-top: 10px;
+    width: auto;
+    max-width: 400px;
+  }
