@@ -49,7 +49,6 @@ function toGoogleEventURL(event) {
     return url + toURLCode(eventURI);
 }
 
-
 /**
  * Generates a Microsoft Outlook Event URL from a generic event
  * @param {object} event 

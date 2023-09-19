@@ -44,13 +44,13 @@ function Event() {
             isLoading ? <p>Loading...</p> : 
             <div className='event-window'>
                 <p className='event-window-message'>Agrega {event.title} a tu calendario favorito</p>
-                <button className='event-window-button' onClick={() => redirectTo(EventMapper.toOutlookEventURL(event))}>
+                <button className='event-window-button  btn btn-light' onClick={() => redirectTo(EventMapper.toOutlookEventURL(event))}>
                     Calendario de Outlook
                 </button>
-                <button className='event-window-button' onClick={() => redirectTo(EventMapper.toGoogleEventURL(event))}>
+                <button className='event-window-button btn btn-light' onClick={() => redirectTo(EventMapper.toGoogleEventURL(event))}>
                     Calendario de Google
                 </button>
-                <button className='event-window-button' onClick={() => downloadFile(EventMapper.toICSFile(event))}>
+                <button className='event-window-button btn btn-light' onClick={() => downloadFile(EventMapper.toICSFile(event))}>
                     {
                         /iPhone/i.test(navigator.userAgent) ? 'Calendario de Apple' : 'Otro calendario'
                     }
