@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import { Button, Stack, Spinner, ScaleFade, Text, Heading } from '@chakra-ui/react'
 import EventMapper from '../../util/EventMapper';
 import './Event.css'
 
 function Event() {
     const { eventId } = useParams();
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(undefined);
     const [event, setEvent] = useState({});
 
     useEffect(() => {
@@ -16,14 +18,14 @@ function Event() {
                 // Update the state with the fetched data
                 setEvent(data);
             })
-            .catch(error => {
+            .catch(() => {
                 // Handle any error that occurs during the request
-                console.error(error);
+                setError(true);
             })
             .finally(() => {
                 // Finish the loading screen
                 setIsLoading(false);
-            })
+            });
     }, [eventId]);
 
     function redirectTo(url) {
@@ -39,25 +41,32 @@ function Event() {
     }
 
     return (
-        <>
+        <div className='event-window'>
             {
-            isLoading ? <p>Loading...</p> : 
-            <div className='event-window'>
-                <p className='event-window-message'>Agrega {event.title} a tu calendario favorito</p>
-                <button className='event-window-button  btn btn-light' onClick={() => redirectTo(EventMapper.toOutlookEventURL(event))}>
-                    Calendario de Outlook
-                </button>
-                <button className='event-window-button btn btn-light' onClick={() => redirectTo(EventMapper.toGoogleEventURL(event))}>
-                    Calendario de Google
-                </button>
-                <button className='event-window-button btn btn-light' onClick={() => downloadFile(EventMapper.toICSFile(event))}>
-                    {
-                        /iPhone/i.test(navigator.userAgent) ? 'Calendario de Apple' : 'Otro calendario'
-                    }
-                </button>
-            </div>
+                isLoading ?
+                    <Spinner thickness='6px' speed='0.44s' emptyColor='gray.200' color='blue.200' size='xl' /> :
+                    error ? <Text fontSize={'xl'} color={'red.500'}>Hubo un error y no se pudo encontrar este evento</Text> :
+                        <ScaleFade in={!isLoading} initialScale={0.8}>
+                            <div className='event-window-text'>
+                                <Heading size={'lg'}>{event.title}</Heading>
+                                <Text fontSize='md' noOfLines={1}>Agrega este evento a tu calendario favorito</Text>
+                            </div>
+                            <Stack direction='column' spacing='2'>
+                                <Button size='md' onClick={() => redirectTo(EventMapper.toOutlookEventURL(event))}>
+                                    Calendario de Outlook
+                                </Button>
+                                <Button size='md' onClick={() => redirectTo(EventMapper.toGoogleEventURL(event))}>
+                                    Calendario de Google
+                                </Button>
+                                <Button size='md' onClick={() => downloadFile(EventMapper.toICSFile(event))}>
+                                    {
+                                        /iPhone/i.test(navigator.userAgent) ? 'Calendario de Apple' : 'Otro calendario'
+                                    }
+                                </Button>
+                            </Stack>
+                        </ScaleFade>
             }
-        </>
+        </div>
     )
 }
 
