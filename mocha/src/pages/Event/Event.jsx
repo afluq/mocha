@@ -30,6 +30,14 @@ function Event() {
         window.location.replace(url);
     }
 
+    function downloadFile(blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Evento ${event.title}.ics`;
+        a.click();
+    }
+
     return (
         <>
             {
@@ -42,7 +50,7 @@ function Event() {
                 <button className='event-window-button' onClick={() => redirectTo(EventMapper.toGoogleEventURL(event))}>
                     Calendario de Google
                 </button>
-                <button className='event-window-button'>
+                <button className='event-window-button' onClick={() => downloadFile(EventMapper.toICSFile(event))}>
                     {
                         /iPhone/i.test(navigator.userAgent) ? 'Calendario de Apple' : 'Otro calendario'
                     }

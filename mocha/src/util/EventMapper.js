@@ -71,7 +71,20 @@ function toOutlookEventURL(event) {
 }
 
 function toICSFile(event) {
-    return event;
+    const startingDate = `${event.startDate}T${event.startHour}`.replace(/:+/g, '').replace(/-/g, ''); 
+    const endingDate = `${event.endDate}T${event.endHour}`.replace(/:+/g, '').replace(/-/g, ''); 
+    const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:${event.title}
+DESCRIPTION:${event.description}
+LOCATION:${event.location}
+DTSTART:${startingDate}
+DTEND:${endingDate}
+END:VEVENT
+END:VCALENDAR`;
+
+    return new Blob([ics], {type: 'text/calendar'});
 }
 
 export default { toGoogleEventURL, toOutlookEventURL, toICSFile };
