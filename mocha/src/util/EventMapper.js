@@ -37,8 +37,8 @@ function getUTCTimeDiff(timezone) {
 function toGoogleEventURL(event) {
     const url = 'https://www.google.com/calendar/';
     // Days and hours stored in Mexico City Timezone
-    const startingDate = `${event.startDate}T${event.startHour}`.replace(/:+/g, '').replace(/-/g, ''); 
-    const endingDate = `${event.endDate}T${event.endHour}`.replace(/:+/g, '').replace(/-/g, ''); 
+    const startingDate = `${event.startDate}T${event.startHour}Z`.replace(/:+/g, '').replace(/-/g, ''); 
+    const endingDate = `${event.endDate}T${event.endHour}Z`.replace(/:+/g, '').replace(/-/g, ''); 
     const eventURI = `render?action=TEMPLATE` 
             + `&title=${event.title}`
             + `&text=${event.title}`

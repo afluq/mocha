@@ -23,8 +23,6 @@ function EventManager() {
         setLocation(e.target.value);
     }
 
-    
-
     return (
         <>
             <Input placeholder='Evento' onChange={handleTitleChange} />
@@ -43,11 +41,6 @@ function EventManager() {
                 <NumberInputField>
                 </NumberInputField>
             </NumberInput>
-            <SingleDatepicker
-                name="ending-date-input"
-                date={endingDate}
-                onDateChange={setEndingDate}
-            />
         </>
     );
 }
