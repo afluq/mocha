@@ -1,7 +1,15 @@
 import * as moment from 'moment-timezone';
 
 const timezone = 'America/Mexico_City';
-
+/** Date format
+ * title: string
+ * description: string
+ * location: string
+ * startDate: string (YYYYMMDD)
+ * endDate: string (YYYYMMDD)
+ * startTime: string (HHMMSS)
+ * endTime: string (HHMMSS)
+ */
 /**
  * Replaces certain characters in a URL string with their URL-encoded equivalents.
  *
@@ -37,14 +45,14 @@ function getUTCTimeDiff(timezone) {
 function toGoogleEventURL(event) {
     const url = 'https://www.google.com/calendar/';
     // Days and hours stored in Mexico City Timezone
-    const startingDate = `${event.startDate}T${event.startHour}Z`.replace(/:+/g, '').replace(/-/g, ''); 
-    const endingDate = `${event.endDate}T${event.endHour}Z`.replace(/:+/g, '').replace(/-/g, ''); 
+    const startDate = `${event.startDate}T${event.startTime}`.replace(/:+/g, '').replace(/-/g, ''); 
+    const endDate = `${event.endDate}T${event.endTime}`.replace(/:+/g, '').replace(/-/g, ''); 
     const eventURI = `render?action=TEMPLATE` 
             + `&title=${event.title}`
             + `&text=${event.title}`
             + `&details=${event.description}`
             + `&location=${event.location}`
-            + `&dates=${startingDate}/${endingDate}`
+            + `&dates=${startDate}/${endDate}`
             + `&ctz=${timezone}`;
     return url + toURLCode(eventURI);
 }
@@ -56,11 +64,11 @@ function toGoogleEventURL(event) {
  */
 function toOutlookEventURL(event) {
     const url = 'https://outlook.live.com/calendar/0/action/'
-    const startingDate = moment(`${event.startDate}T${event.startHour}`).format('YYYY-MM-DDTHH:mm:ss');
-    const endingDate = moment(`${event.endDate}T${event.endHour}`).format('YYYY-MM-DDTHH:mm:ss');	
+    const startDate = moment(`${event.startDate}T${event.startTime}`).format('YYYY-MM-DDTHH:mm:ss');
+    const endDate = moment(`${event.endDate}T${event.endTime}`).format('YYYY-MM-DDTHH:mm:ss');	
     const eventURI = `compose?allday=false` 
-            + `&enddt=${endingDate}${getUTCTimeDiff(timezone)}`
-            + `&startdt=${startingDate}${getUTCTimeDiff(timezone)}`
+            + `&enddt=${endDate}${getUTCTimeDiff(timezone)}`
+            + `&startdt=${startDate}${getUTCTimeDiff(timezone)}`
             + `&body=${event.description}`
             + `&subject=${event.title}` 
             + `&location=${event.location}`
@@ -70,16 +78,16 @@ function toOutlookEventURL(event) {
 }
 
 function toICSFile(event) {
-    const startingDate = `${event.startDate}T${event.startHour}`.replace(/:+/g, '').replace(/-/g, ''); 
-    const endingDate = `${event.endDate}T${event.endHour}`.replace(/:+/g, '').replace(/-/g, ''); 
+    const startDate = `${event.startDate}T${event.startTime}`.replace(/:+/g, '').replace(/-/g, ''); 
+    const endDate = `${event.endDate}T${event.endTime}`.replace(/:+/g, '').replace(/-/g, ''); 
     const ics = `BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
 SUMMARY:${event.title}
 DESCRIPTION:${event.description}
 LOCATION:${event.location}
-DTSTART:${startingDate}
-DTEND:${endingDate}
+DTSTART:${startDate}
+DTEND:${endDate}
 END:VEVENT
 END:VCALENDAR`;
 

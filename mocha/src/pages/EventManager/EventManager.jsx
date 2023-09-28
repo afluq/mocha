@@ -8,8 +8,8 @@ function EventManager() {
     const [location, setLocation] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [startTime, setStartTime] = useState({h: 0, m: 0});
-    const [endingDate, setEndingDate] = useState(new Date());
-    const [endingTime, setEndingTime] = useState({h: 0, m: 0});
+    const [endDate, setEndDate] = useState(new Date());
+    const [endTime, setEndTime] = useState({h: 0, m: 0});
 
     function handleTitleChange(e) {
         setTitle(e.target.value);
@@ -33,14 +33,16 @@ function EventManager() {
                 date={startDate}
                 onDateChange={setStartDate}
             />
-            <NumberInput min={0} max={23} onChange={(value) => setStartTime(startTime => ({ ...startTime, h: value }))}>
-                <NumberInputField>
-                </NumberInputField>
-            </NumberInput>
-            <NumberInput min={0} max={59} onChange={(value) => setStartTime(startTime => ({ ...startTime, m: value }))}>
-                <NumberInputField>
-                </NumberInputField>
-            </NumberInput>
+            <>
+                <NumberInput min={0} max={23} onChange={(value) => setStartTime(startTime => ({ ...startTime, h: value }))}>
+                    <NumberInputField placeholder='Hora'>
+                    </NumberInputField>
+                </NumberInput>
+                <NumberInput min={0} max={59} onChange={(value) => setStartTime(startTime => ({ ...startTime, m: value }))}>
+                    <NumberInputField placeholder='Minutos'>
+                    </NumberInputField>
+                </NumberInput>
+            </>
         </>
     );
 }
