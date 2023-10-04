@@ -6,7 +6,6 @@ import EventManager from './pages/EventManager/EventManager.jsx';
 import './App.css'
 
 function App() {
-  
   return (
     <Router>
       <Routes>
