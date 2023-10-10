@@ -2,18 +2,18 @@ import {
     Input, Textarea, Text, Heading, Button, 
     Stack, Card, CardBody, CardHeader, 
 } from '@chakra-ui/react';
-import formatDate from '../../util/EventBuilder';
+import {formatDate} from '../../util/EventBuilder';
 import { useState } from 'react';
-import './NewEvent.css';
 
 function NewEvent() {
+    const [isLoading, setIsLoading] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
     const [startDateTime, setStartDateTime] = useState('');
     const [endDateTime, setEndDateTime] = useState('');
 
-    function submitNewEvent() {
+    async function submitNewEvent() {
         const [startDate, startTime] = formatDate(startDateTime);
         const [endDate, endTime] = formatDate(endDateTime);
 
@@ -27,7 +27,21 @@ function NewEvent() {
             endTime: endTime,
         }
 
-        console.log(event)
+        await fetch(`https://localhost:7248/api/event/new`, { 
+            method: 'POST',
+            mode: 'cors',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(event)})
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(() => {
+                setError(true);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     }
 
     function handleTitleChange(e) {
@@ -89,7 +103,7 @@ function NewEvent() {
                                     onChange={handleEndDateTime}
                                 />
                             </Stack>
-                            <Button colorScheme='blue' onClick={() => submitNewEvent()}>Crear evento</Button>
+                            <Button colorScheme='blue' onClick={async () => await submitNewEvent()}>Crear evento</Button>
                         </Stack>
                     </CardBody>
                 </Card>

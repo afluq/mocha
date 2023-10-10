@@ -1,0 +1,27 @@
+.event-manager-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.event-manager-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+    padding: 10px;
+}
+
+.event-manager-my-events {
+    width: 70vw;
+}
+
+.event-manager-new {
+    display: flex;
+    width: 30vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

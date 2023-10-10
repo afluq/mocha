@@ -12,7 +12,7 @@ function Event() {
 
     useEffect(() => {
         // Request the event information from the server
-        fetch(`https://127.0.0.1:7248/api/event/${eventId}`, {mode: 'cors'})
+        fetch(`https://localhost:7248/api/event/${eventId}`, {mode: 'cors'})
             .then(response => response.json())
             .then(data => {
                 // Update the state with the fetched data
